@@ -1,4 +1,4 @@
-import { Landing } from '../src/pages'
+import { Landing, Dashboard, Error, Register } from '../src/pages'
 
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 
@@ -6,17 +6,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<div>Dashboard</div>} />
-        <Route path='/register' element={<div>Register</div>} />
+        <Route path='/' element={<Dashboard />} />
+        <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />
-        <Route
-          path='*'
-          element={
-            <div>
-              <h1>Error</h1>
-            </div>
-          }
-        />
+        <Route path='*' element={<Error />} />
       </Routes>
     </BrowserRouter>
   )

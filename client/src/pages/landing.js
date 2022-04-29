@@ -1,4 +1,6 @@
 import { Logo } from '../components'
+
+import { BrowserRouter, Routes, Router, Link } from 'react-router-dom'
 import main from '../assets/images/main.svg'
 import React from 'react'
 import Wrapper from '../assets/wrappers/landing'
@@ -20,7 +22,9 @@ const Landing = () => {
             quinoa lo-fi tote bag adaptogen everyday carry meggings +1 brunch
             narwhal.
           </p>
-          <button className='btn btn-hero'>Login/Register</button>
+          <Link to='/register' className='btn btn-hero'>
+            Login/Register
+          </Link>
         </div>
         {/* col-2 */}
         <img src={main} alt='job-tracking' className='img main-img' />

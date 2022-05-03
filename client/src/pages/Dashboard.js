@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Dashboard = () => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch('/api/v1')
+      const data = await response.json()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h1>Dashboard here</h1>
     </div>
   )
 }

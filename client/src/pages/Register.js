@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Logo, FormRow, Alert } from '../components'
 import Wrapper from '../assets/wrappers/registerPage'
 import { useAppContext } from '../context/appContext'
+import { useNavigate } from 'react-router-dom'
 
 const initialState = {
   name: '',
@@ -11,7 +12,8 @@ const initialState = {
 }
 
 const Register = () => {
-  const { isLoading, showAlert, displayAlert, clearAlert, registerUser } =
+  const navigate = useNavigate()
+  const { user, isLoading, showAlert, displayAlert, clearAlert, registerUser } =
     useAppContext()
   const [values, setValues] = useState(initialState)
   const handleChange = (e) => {
@@ -36,6 +38,14 @@ const Register = () => {
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember })
   }
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/')
+      }, 3000)
+    }
+  })
   return (
     <Wrapper className='full-page'>
       <form className='form' onSubmit={handleSubmit}>

@@ -46,7 +46,8 @@ const login = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-  res.send('update user')
+  const user = req.user
+  res.status(StatusCodes.OK).json({ user })
 }
 
 export { register, login, updateUser }

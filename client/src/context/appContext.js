@@ -74,6 +74,11 @@ const AppProvider = ({ children }) => {
     clearAlert()
   }
 
+  const updateUser = async (currentUser) => {
+    console.log(currentUser)
+    clearAlert()
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -82,6 +87,7 @@ const AppProvider = ({ children }) => {
         clearAlert,
         setupUser,
         toggleSidebar,
+        updateUser,
       }}
     >
       {children}

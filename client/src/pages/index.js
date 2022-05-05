@@ -1,6 +1,6 @@
 import Landing from '../pages/landing'
-import Dashboard from '../pages/Dashboard'
 import Error from '../pages/Error'
 import Register from '../pages/Register'
+import ProtectedRoute from './ProtectedRoute'
 
-export { Landing, Dashboard, Error, Register }
+export { Landing, Error, Register, ProtectedRoute }

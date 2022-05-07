@@ -11,6 +11,7 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  LOGOUT_USER,
 } from './action'
 
 const token = localStorage.getItem('token')
@@ -52,9 +53,8 @@ const AppProvider = ({ children }) => {
       return response
     },
     (error) => {
-      console.log(error.response)
       if (error.response.status === 401) {
-        console.log('AUTH ERROR')
+        logoutUser()
       }
       return Promise.reject(error)
     }
@@ -79,7 +79,7 @@ const AppProvider = ({ children }) => {
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR })
   }
-  const removeItemFromLocalStorage = () => {
+  const removeUserFromLocalStorage = () => {
     localStorage.removeItem('user')
     localStorage.removeItem('token')
     localStorage.removeItem('location')
@@ -116,12 +116,19 @@ const AppProvider = ({ children }) => {
       })
       addUserToLocalStorage({ user, location, token })
     } catch (error) {
-      dispatch({
-        type: UPDATE_USER_ERROR,
-        payload: { msg: error.response.data.msg },
-      })
+      if (error.response.status !== 401) {
+        dispatch({
+          type: UPDATE_USER_ERROR,
+          payload: { msg: error.response.data.msg },
+        })
+      }
+      return Promise.reject(error)
     }
     clearAlert()
+  }
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER })
+    removeUserFromLocalStorage()
   }
 
   return (
@@ -133,6 +140,7 @@ const AppProvider = ({ children }) => {
         setupUser,
         toggleSidebar,
         updateUser,
+        logoutUser,
       }}
     >
       {children}

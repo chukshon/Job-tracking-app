@@ -60,11 +60,7 @@ const updateUser = async (req, res) => {
 
   await user.save()
   const token = user.createJWT()
-  res.status(StatusCodes.OK).json({
-    user,
-    token,
-    location: user.location,
-  })
+
   res.status(StatusCodes.OK).json({
     user,
     token,

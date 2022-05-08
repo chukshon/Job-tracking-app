@@ -14,8 +14,11 @@ const createJob = async (req, res) => {
   const job = await Job.create(req.body)
   res.status(StatusCodes.CREATED).json({ job })
 }
-const getAllJobs = (req, res) => {
-  res.send('Get all Jobs')
+const getAllJobs = async (req, res) => {
+  const jobs = await Job.find({ createdBy: req.user.userId })
+  res
+    .status(StatusCodes.OK)
+    .json({ jobs, totalJobs: jobs.length, numOfPages: 1 })
 }
 
 const deleteJob = (req, res) => {

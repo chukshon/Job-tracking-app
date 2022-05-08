@@ -12,6 +12,8 @@ import Job from './Job'
 import StatsContainer from './StatsContainer'
 import StatsItem from './StatsItem'
 import ChartsContainer from './ChartsContainer'
+import BarChart from './BarChart'
+import AreaChart from './AreaChart'
 
 export {
   Logo,
@@ -28,4 +30,6 @@ export {
   StatsContainer,
   StatsItem,
   ChartsContainer,
+  BarChart,
+  AreaChart,
 }

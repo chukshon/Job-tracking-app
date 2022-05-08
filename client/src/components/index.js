@@ -9,6 +9,10 @@ import JobsContainer from './JobsContainer'
 import SearchContainer from './SearchContainer'
 import Loading from './Loading'
 import Job from './Job'
+import StatsContainer from './StatsContainer'
+import StatsItem from './StatsItem'
+import ChartsContainer from './ChartsContainer'
+
 export {
   Logo,
   FormRow,
@@ -21,4 +25,7 @@ export {
   SearchContainer,
   Job,
   Loading,
+  StatsContainer,
+  StatsItem,
+  ChartsContainer,
 }

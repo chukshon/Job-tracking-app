@@ -6,9 +6,9 @@ const register = async (req, res, next) => {
   const { name, email, password } = req.body
 
   const emailExists = await UserModel.findOne({ email })
-  if (emailExists) {
-    throw new badRequestError('Email already exists')
-  }
+  // if (emailExists) {
+  //   throw new badRequestError('Email already exists')
+  // }
   if (!name || !email || !password) {
     throw new badRequestError('Please provide all values')
   }

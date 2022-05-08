@@ -12,6 +12,11 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
   LOGOUT_USER,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
+  CREATE_JOB_BEGIN,
+  CREATE_JOB_SUCCESS,
+  CREATE_JOB_ERROR,
 } from './action'
 
 const token = localStorage.getItem('token')
@@ -139,7 +144,42 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGOUT_USER })
     removeUserFromLocalStorage()
   }
+  const handleChange = ({ name, value }) => {
+    dispatch({
+      type: HANDLE_CHANGE,
+      payload: { name, value },
+    })
+  }
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES })
+  }
 
+  const createJob = async () => {
+    dispatch({ type: CREATE_JOB_BEGIN })
+    try {
+      const { position, company, jobLocation, jobType, status } = state
+
+      await authFetch.post('/jobs', {
+        company,
+        position,
+        jobLocation,
+        jobType,
+        status,
+      })
+      dispatch({
+        type: CREATE_JOB_SUCCESS,
+      })
+      // call function instead clearValues()
+      dispatch({ type: CLEAR_VALUES })
+    } catch (error) {
+      if (error.response.status === 401) return
+      dispatch({
+        type: CREATE_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
+      })
+    }
+    clearAlert()
+  }
   return (
     <AppContext.Provider
       value={{
@@ -150,6 +190,9 @@ const AppProvider = ({ children }) => {
         toggleSidebar,
         updateUser,
         logoutUser,
+        handleChange,
+        clearValues,
+        createJob,
       }}
     >
       {children}

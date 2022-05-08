@@ -1,8 +1,9 @@
-import { FormRow, Alert } from '../../components'
+import { FormRow, Alert, FormRowSelect } from '../../components'
 import { useAppContext } from '../../context/appContext'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
 const AddJob = () => {
   const {
+    isLoading,
     isEditing,
     showAlert,
     displayAlert,
@@ -13,6 +14,9 @@ const AddJob = () => {
     jobTypeOptions,
     status,
     statusOptions,
+    handleChange,
+    clearValues,
+    createJob,
   } = useAppContext()
 
   const handleSubmit = (e) => {
@@ -22,20 +26,23 @@ const AddJob = () => {
       displayAlert()
       return
     }
-    console.log('create job')
+    if (isEditing) {
+      // eventually editJob()
+      return
+    }
+    createJob()
   }
 
   const handleJobInput = (e) => {
     const name = e.target.name
     const value = e.target.value
-    console.log(`${name}:${value}`)
+    handleChange({ name, value })
   }
   return (
     <Wrapper>
       <form className='form'>
         <h3>{isEditing ? 'edit job' : 'add job'} </h3>
         {showAlert && <Alert />}
-
         {/* position */}
         <div className='form-center'>
           <FormRow
@@ -61,6 +68,21 @@ const AddJob = () => {
           />
           {/* job type */}
 
+          <FormRowSelect
+            name='status'
+            value={status}
+            handleChange={handleJobInput}
+            list={statusOptions}
+          />
+          {/* job type */}
+          <FormRowSelect
+            labelText='type'
+            name='jobType'
+            value={jobType}
+            handleChange={handleJobInput}
+            list={jobTypeOptions}
+          />
+
           {/* job status */}
 
           <div className='btn-container'>
@@ -68,8 +90,18 @@ const AddJob = () => {
               className='btn btn-block submit-btn'
               type='submit'
               onClick={handleSubmit}
+              disabled={isLoading}
             >
               submit
+            </button>
+            <button
+              className='btn btn-block clear-btn'
+              onClick={(e) => {
+                e.preventDefault()
+                clearValues()
+              }}
+            >
+              clear
             </button>
           </div>
         </div>
